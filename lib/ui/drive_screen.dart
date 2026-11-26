@@ -9,6 +9,7 @@ import '../engine/progress.dart';
 import '../models/story.dart';
 import '../voice/background_session.dart';
 import 'journal_screen.dart';
+import 'pixel/pixel_scene_view.dart';
 import 'strings.dart';
 import 'theme.dart';
 
@@ -143,7 +144,12 @@ class _DriveScreenState extends State<DriveScreen> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: _tap,
-          child: Column(children: [
+          child: Stack(children: [
+            // The story's scene glows faintly behind the controls.
+            const Positioned.fill(
+              child: Opacity(opacity: .32, child: FittedBox(fit: BoxFit.cover, child: SizedBox(width: 160, height: 224, child: PixelSceneView()))),
+            ),
+            Column(children: [
             Expanded(
               child: Center(
                 child: Semantics(
@@ -187,6 +193,7 @@ class _DriveScreenState extends State<DriveScreen> {
             ),
             if (_captions && e != null) _captionBox(e),
             if (_started && e != null) _typePanel(e),
+            ]),
           ]),
         ),
       ),
