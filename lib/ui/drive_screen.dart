@@ -8,6 +8,7 @@ import '../engine/phrases.dart';
 import '../engine/progress.dart';
 import '../models/story.dart';
 import '../voice/background_session.dart';
+import '../voice/voice_log.dart';
 import 'journal_screen.dart';
 import 'pixel/pixel_scene_view.dart';
 import 'strings.dart';
@@ -122,10 +123,27 @@ class _DriveScreenState extends State<DriveScreen> {
         title: Text(widget.story.title, style: const TextStyle(fontSize: 16, color: Noir.dim)),
         actions: [
           if (e != null)
-            TextButton(
+            PopupMenuButton<double>(
               key: const Key('speed'),
-              onPressed: () => _cycleSpeed(e),
-              child: Text('${_speedLabel(e.rate)}×', style: const TextStyle(color: Noir.amber, fontSize: 16)),
+              tooltip: t['speed'],
+              initialValue: e.rate,
+              onSelected: (v) => _setSpeed(e, v),
+              itemBuilder: (_) => [
+                for (final v in GameEngine.speeds)
+                  CheckedPopupMenuItem<double>(
+                    key: Key('speed-$v'),
+                    value: v,
+                    checked: (v - e.rate).abs() < .001,
+                    child: Text('${_speedLabel(v)}×'),
+                  ),
+              ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Text('${_speedLabel(e.rate)}×', style: const TextStyle(color: Noir.amber, fontSize: 16)),
+                  const Icon(Icons.arrow_drop_down, color: Noir.amber),
+                ]),
+              ),
             ),
           IconButton(
             tooltip: t['captions'],
@@ -243,18 +261,29 @@ class _DriveScreenState extends State<DriveScreen> {
               const SizedBox(width: 8),
               FilledButton(onPressed: () => _send(e), child: Text(t['send'])),
             ]),
+            const SizedBox(height: 12),
+            // What the microphone and background service are doing, to
+            // diagnose a car or phone where voice doesn't work.
+            ValueListenableBuilder<List<String>>(
+              valueListenable: VoiceLog.entries,
+              builder: (_, lines, _) => Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  lines.reversed.take(8).join('\n'),
+                  style: const TextStyle(color: Noir.dim, fontSize: 11, fontFamily: 'monospace'),
+                ),
+              ),
+            ),
           ],
         ),
       );
 
   String _speedLabel(double r) => r == r.roundToDouble() ? r.toStringAsFixed(1) : r.toString();
 
-  void _cycleSpeed(GameEngine e) {
-    const speeds = GameEngine.speeds;
-    final i = speeds.indexWhere((v) => v >= e.rate - 0.001);
-    final next = speeds[(i + 1) % speeds.length];
-    e.setRate(next);
-    widget.services.store.setSpeed(next);
+  void _setSpeed(GameEngine e, double v) {
+    // Takes effect immediately, mid-sentence.
+    e.setRate(v);
+    widget.services.store.setSpeed(v);
   }
 
   void _send(GameEngine e) {
