@@ -1,0 +1,179 @@
+{
+ "id": "room-312",
+ "lang": "en",
+ "title": "Room 312",
+ "genre": "Noir mystery",
+ "minutes": 20,
+ "blurb": "Chicago, November 1938. You wake up in a blood-soaked hotel bed next to an unconscious stranger.",
+ "ending": "Lena Voss and Felix Wren in handcuffs, the Navy harbor plans recovered, and your name cleared.",
+ "start": "intro",
+ "nodes": {
+  "intro": {
+   "checkpoint": "Waking Up",
+   "text": "Chicago, November, nineteen thirty-eight. Rain drums on the window ledge. You wake up in a hotel room you don't recognize. Your head is splitting, and your mouth tastes of bitter almonds and cheap brandy. The sheets are sticky. With blood. On the carpet beside the bed lies an unconscious man in an open suit jacket. The brass number on the door reads three twelve.",
+   "choices": [
+    {"key": "A", "label": "Check on the man", "kw": ["check", "man", "guy", "pulse", "alive", "examine", "him"], "next": "check_man"},
+    {"key": "B", "label": "Call the police", "kw": ["police", "call", "phone", "cops", "nine one one"], "next": "call_police"},
+    {"key": "C", "label": "Get dressed fast and leave the room", "kw": ["dress", "leave", "get out", "run", "escape", "door", "clothes", "bail"], "next": "dress"}
+   ]
+  },
+  "check_man": {
+   "text": "You kneel beside him. He's breathing. Shallow, but breathing. There's a gash on his temple, the blood already drying. It's his blood on the sheets, not yours. Inside his jacket you feel something hard. A Chicago Police badge. Detective Edward Kane. A cop. Next to your bed. Then footsteps out in the hallway.",
+   "effects": {"clue": {"id": "badge", "title": "Detective Kane's badge", "text": "The unconscious man is a police detective, Edward Kane. He's alive, with a wound on his temple."}, "flag": "checkedMan"},
+   "choices": [
+    {"key": "A", "label": "Search the rest of his pockets", "kw": ["search", "pocket", "wallet", "go through"], "next": "pockets"},
+    {"key": "B", "label": "Try to wake him up", "kw": ["wake", "water", "shake", "slap", "revive", "help him"], "next": "wake_kane"},
+    {"key": "C", "label": "Freeze and listen to the footsteps", "kw": ["listen", "freeze", "footsteps", "wait", "quiet", "hide"], "next": "steps"}
+   ]
+  },
+  "pockets": {
+   "text": "A matchbook from the Club Adria. On the back, someone has written in lipstick: Lena, eleven p.m. Under the lining, a small brass key stamped with the number seven and the words: Union Station, baggage lockers. You pocket everything. The footsteps in the hallway are getting closer.",
+   "effects": {"clue": {"id": "matches", "title": "Club Adria matchbook", "text": "\"Lena, 11 p.m.\" in lipstick. Kane was meeting someone."}, "item": {"id": "key7", "name": "Locker key No. 7", "desc": "Union Station, baggage lockers."}},
+   "next": "steps"
+  },
+  "wake_kane": {
+   "text": "You pat his cheek. His eyelids flutter. Kane grabs your wrist, surprisingly hard, and whispers: Not you... Lena... locker seven... the dawn train... Then he's gone again. The footsteps in the hallway are getting closer.",
+   "effects": {"clue": {"id": "whisper", "title": "Kane's whisper", "text": "\"Not you... Lena... locker seven... the dawn train.\" Kane knows you're innocent."}, "flag": "kaneTrusts"},
+   "next": "steps"
+  },
+  "steps": {
+   "checkpoint": "Footsteps",
+   "text": "The footsteps stop outside your door. Someone tries the handle, but the chain holds. A woman whispers: Leave it. The cop won't wake up before dawn. And the other one is the police's problem now. A man grunts. The footsteps fade, and the elevator bell rings. The other one. That's you.",
+   "effects": {"clue": {"id": "frame", "title": "Someone is framing you", "text": "A woman and a man outside the door want the police to find you next to a wounded cop."}},
+   "choices": [
+    {"key": "A", "label": "Follow them into the hallway", "kw": ["follow", "hallway", "after them", "chase", "go out"], "next": "hallway"},
+    {"key": "B", "label": "Search the room", "kw": ["search", "room", "look around", "drawer", "bed"], "next": "search_room"},
+    {"key": "C", "label": "Call the front desk", "kw": ["front desk", "desk", "reception", "call", "phone"], "next": "reception_call"}
+   ]
+  },
+  "call_police": {
+   "text": "You lift the receiver of the black phone on the nightstand. Silence. You pull the cord. It's been cleanly cut with a knife. Somebody really didn't want you calling anyone from here. The man on the floor groans quietly.",
+   "effects": {"clue": {"id": "cable", "title": "Cut phone cord", "text": "Someone made sure you couldn't call for help from Room 312."}},
+   "choices": [
+    {"key": "A", "label": "Check on the man", "kw": ["check", "man", "guy", "pulse", "help"], "next": "check_man"},
+    {"key": "B", "label": "Search the room", "kw": ["search", "room", "look around"], "next": "search_room"},
+    {"key": "C", "label": "Step out into the hallway", "kw": ["hallway", "leave", "out", "door", "run"], "next": "hallway"}
+   ]
+  },
+  "dress": {
+   "text": "You pull on your pants and shirt and grab your coat from the back of the chair. It's strangely heavy. In the right pocket: a revolver. Small, nickel-plated, still smelling of gunpowder. You flip open the cylinder. One bullet is missing. This is not your gun. Or you don't remember that it is.",
+   "effects": {"clue": {"id": "revolver", "title": "Planted revolver", "text": "Someone left a recently fired revolver in your coat. One bullet is missing."}, "item": {"id": "revolver", "name": "Nickel-plated revolver", "desc": "Five rounds in the cylinder. Someone already fired the sixth."}},
+   "choices": [
+    {"key": "A", "label": "Go back and check on the man", "kw": ["check", "man", "guy", "back", "pulse"], "next": "check_man"},
+    {"key": "B", "label": "Take the service stairs", "kw": ["stairs", "service", "back way", "kitchen"], "next": "service_stairs"},
+    {"key": "C", "label": "Search the room", "kw": ["search", "room", "look around"], "next": "search_room"}
+   ]
+  },
+  "search_room": {
+   "text": "Under the bed you find a woman's red leather glove that smells of violets. On the nightstand, a hotel notepad with a hurried line: Union Station. Six forty. Track two. And in the wastebasket, a Club Adria program: Tonight, Lena Voss sings.",
+   "effects": {"clue": {"id": "glove", "title": "Red glove and a note", "text": "A glove that smells of violets. A note: \"Union Station, 6:40, track 2\". A program: \"Tonight, Lena Voss sings\"."}, "flag": "searchedRoom"},
+   "choices": [
+    {"key": "A", "label": "Step out into the hallway", "kw": ["hallway", "leave", "out", "door"], "next": "hallway"},
+    {"key": "B", "label": "Take the service stairs", "kw": ["stairs", "service", "back way"], "next": "service_stairs"},
+    {"key": "C", "label": "Check on the man on the floor", "kw": ["check", "man", "guy", "pulse"], "next": "check_man"}
+   ]
+  },
+  "reception_call": {
+   "text": "The phone works. A sleepy clerk answers: Hotel Victoria, front desk. You ask who's registered in Room three twelve. A pause. Detective Kane. And the second guest signed in under your name. Mister Wren, the manager, handled the check-in himself. You hang up.",
+   "effects": {"clue": {"id": "register", "title": "The hotel register", "text": "Kane rented Room 312. Your name was written next to his. The manager, Felix Wren, handled the check-in."}},
+   "next": "hallway"
+  },
+  "hallway": {
+   "checkpoint": "Hotel Victoria",
+   "text": "The hallway smells of floor wax and cigarettes. The arrow above the elevator sinks slowly toward the lobby. By the stairs stands the elevator boy in a red uniform, sixteen at most, nervously turning his cap in his hands. A siren wails outside. The police are on their way.",
+   "choices": [
+    {"key": "A", "label": "Take the elevator down to the lobby", "kw": ["elevator", "lift", "lobby", "down"], "next": "lobby"},
+    {"key": "B", "label": "Take the service stairs", "kw": ["stairs", "service", "back way", "kitchen"], "next": "service_stairs"},
+    {"key": "C", "label": "Question the elevator boy", "kw": ["boy", "kid", "ask", "question", "talk", "bellhop"], "next": "liftboy"}
+   ]
+  },
+  "liftboy": {
+   "text": "The kid swallows hard. A tall lady in red gloves. Miss Voss, the singer from the Adria. She went down with Mister Wren, the manager. He was carrying a leather briefcase and told me to forget I ever saw them. You press a coin into his hand. He points you to the service stairs.",
+   "effects": {"clue": {"id": "liftboy", "title": "The elevator boy's story", "text": "Lena Voss and the manager, Wren, left together. Wren carried a leather briefcase."}},
+   "next": "service_stairs"
+  },
+  "lobby": {
+   "text": "The elevator doors slide open. In the lobby: three uniformed officers and a lieutenant in a wet hat. Room three twelve, upstairs, move it! he barks. The desk clerk looks straight at you and opens his mouth.",
+   "choices": [
+    {"key": "A", "label": "Walk up and tell the police the truth", "kw": ["truth", "police", "lieutenant", "tell", "explain", "confess"], "next": "police_truth"},
+    {"key": "B", "label": "Slip out through the revolving door", "kw": ["slip", "revolving", "door", "sneak", "leave", "street"], "next": "street"},
+    {"key": "C", "label": "Ride back up and take the service stairs", "kw": ["back", "elevator", "stairs", "service"], "next": "service_stairs"}
+   ]
+  },
+  "police_truth": {
+   "fail": true,
+   "text": "The lieutenant listens for two minutes, then snaps the cuffs on you. Save it for the judge. At dawn, the train leaves right on time, carrying whoever is really behind tonight. That's not the ending fate wrote for you. Let's rewind to your last checkpoint.",
+   "next": "@checkpoint"
+  },
+  "service_stairs": {
+   "checkpoint": "The Back Alley",
+   "text": "The service stairs lead through the hotel kitchen into the back alley. In a tin trash can by the dumpsters, a fire is burning low. Standing over it is the hotel manager, Felix Wren, feeding papers into the flames. When he sees you, he goes pale.",
+   "choices": [
+    {"key": "A", "label": "Confront Wren", "kw": ["confront", "wren", "manager", "grab him", "stop him", "question"], "next": "confront_wren"},
+    {"key": "B", "label": "Pull the unburned pages from the fire", "kw": ["pages", "fire", "papers", "pull", "trash"], "next": "burned_papers"},
+    {"key": "C", "label": "Slip out the gate onto the street", "kw": ["gate", "street", "slip", "sneak", "leave", "run"], "next": "street"}
+   ]
+  },
+  "confront_wren": {
+   "text": "You grab him by the lapels. Wren, drenched in sweat, babbles: I only rented the room! It was her, Lena. She slipped something into your brandy at the Adria. Kane was onto her. And the plans... the harbor plans leave for New York at dawn. He wrenches free and runs off into the rain.",
+   "effects": {"clue": {"id": "confession", "title": "Wren's confession", "text": "Lena Voss drugged you at the Club Adria. Kane was tailing her. Stolen Navy harbor plans leave for New York at dawn."}},
+   "next": "street"
+  },
+  "burned_papers": {
+   "text": "You burn your fingers, but you pull half a page out of the fire. Typewritten, with a government letterhead: Great Lakes Naval Station. Harbor defense layout. Top secret. Meanwhile, Wren vanishes through the gate.",
+   "effects": {"clue": {"id": "plans", "title": "The burned document", "text": "Part of the top-secret harbor plans for the Great Lakes Naval Station. This isn't just a murder attempt. It's espionage."}, "item": {"id": "page", "name": "Charred page of the plans", "desc": "Great Lakes Naval Station, top secret."}},
+   "next": "street"
+  },
+  "street": {
+   "checkpoint": "Rainy Street",
+   "text": "State Street is drowning in rain. The streetlights flicker. A cab idles outside the hotel, the driver smoking a cigarette. Where to? he asks, without turning around. The clock on the corner reads five twenty.",
+   "choices": [
+    {"key": "A", "label": "To the Club Adria", "kw": ["adria", "club"], "next": "club"},
+    {"key": "B", "label": "To Union Station", "kw": ["union", "train", "depot", "railroad"], "next": "station"},
+    {"key": "C", "label": "To the police precinct", "kw": ["precinct", "police", "station house", "cops"], "next": "precinct"}
+   ]
+  },
+  "precinct": {
+   "text": "At the precinct, the desk sergeant yawns and tells you to wait. On the wall hangs a wanted poster. With your description, the glue still wet. You back out before anyone looks up. The cabbie is still waiting. Union Station, then?",
+   "next": "station"
+  },
+  "club": {
+   "text": "At this hour, the Club Adria is a room full of chairs stacked on tables. Lena's dressing room is open. On the vanity: an empty packet of sleeping powder, and a photograph of Lena in the arms of a man in a foreign uniform. On the back: New York, after the handoff. It all makes sense now. You head for the station.",
+   "effects": {"clue": {"id": "photo", "title": "Photo from the dressing room", "text": "Lena with a foreign intelligence officer. \"New York, after the handoff.\" Sleeping powder: that's how she knocked you out."}},
+   "next": "station"
+  },
+  "station": {
+   "checkpoint": "Union Station, Dawn",
+   "text": "Union Station. Six thirty. Steam from the locomotives mixes with the fog. Under the great clock you spot red gloves. Lena Voss, and beside her, Wren with the briefcase. They're heading for track two. Ten minutes until departure.",
+   "choices": [
+    {"key": "A", "label": "Open locker number seven first", "kw": ["locker", "seven", "key", "baggage"], "next": "locker"},
+    {"key": "B", "label": "Head straight for track two", "kw": ["track", "straight", "train", "after them", "follow", "platform"], "next": "platform"},
+    {"key": "C", "label": "Call the police from a phone booth", "kw": ["booth", "police", "call", "phone"], "next": "phone_booth"}
+   ]
+  },
+  "locker": {
+   "text": "{key7?Kane's key fits perfectly.:You don't have the key, but the old lock gives way on the third hard yank.} Inside the locker: Detective Kane's notebook. Dates, times, names. Lena Voss, Felix Wren, the handoff of the harbor plans. And one sentence, underlined twice: They plan to frame a random hotel guest. You have proof of your innocence.",
+   "effects": {"clue": {"id": "notebook", "title": "Kane's notebook", "text": "Kane's entire investigation. \"They plan to frame a random hotel guest\": proof of your innocence."}, "item": {"id": "notebook", "name": "Detective Kane's notebook", "desc": "Proof of your innocence."}, "flag": "hasProof"},
+   "next": "platform"
+  },
+  "phone_booth": {
+   "text": "You drop a nickel and ask for the police. This is a witness. The six forty to New York, track two. Spies with stolen Navy plans. Detective Kane is lying wounded at the Hotel Victoria, Room three twelve. You hang up. Every minute counts now.",
+   "effects": {"flag": "calledBackup"},
+   "next": "platform"
+  },
+  "platform": {
+   "checkpoint": "Track Two",
+   "text": "Track two. The conductor raises his flag. Lena sets her foot on the step of the car as Wren hands her the briefcase. She turns and looks straight at you. She smiles, as if she knows you won't make it in time.",
+   "choices": [
+    {"key": "A", "label": "Shout \"Police!\" and block the car door", "kw": ["shout", "police", "block", "door", "yell"], "next": "finale"},
+    {"key": "B", "label": "Jump onto the train after them", "kw": ["jump", "train", "board", "get on", "after them"], "next": "finale"},
+    {"key": "C", "label": "Snatch the briefcase from Wren", "kw": ["briefcase", "snatch", "grab", "wren", "take"], "next": "finale"}
+   ]
+  },
+  "finale": {
+   "end": true,
+   "checkpoint": "Finale",
+   "text": "{revolver?You draw the nickel-plated revolver. Wren drops the briefcase on the platform and raises his hands.:You lunge forward. The briefcase hits the wet platform.} Lena tries to leap into the car, but {calledBackup?officers are already running in from both ends of the platform, called by you from the booth.:the lieutenant from the hotel pushes through the crowd with two uniformed men.} Behind them, pale, a bandage on his temple, comes Detective Kane. {hasProof?You hand him his notebook. He nods.:Kane looks at you and says only: Let this one go. Wrong guest, right night.} The cuffs click shut around Lena Voss's wrists. The train leaves without her. The rain finally stops. The end of Room three twelve."
+  }
+ }
+}
