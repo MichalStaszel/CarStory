@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../app_services.dart';
 import '../engine/game_engine.dart';
@@ -8,7 +7,9 @@ import '../engine/interpreter.dart';
 import '../engine/phrases.dart';
 import '../engine/progress.dart';
 import '../models/story.dart';
+import '../voice/background_session.dart';
 import 'journal_screen.dart';
+import 'pixel/pixel_scene_view.dart';
 import 'strings.dart';
 import 'theme.dart';
 
@@ -39,11 +40,11 @@ class _DriveScreenState extends State<DriveScreen> {
     final s = widget.services;
     _progress = widget.restart ? Progress.fresh(widget.story) : s.store.load(widget.story);
     if (_progress.done) _progress = Progress.fresh(widget.story);
-    WakelockPlus.enable();
     s.voiceFor(widget.story.lang).then((voice) {
       if (!mounted) return;
       setState(() {
         _engine = GameEngine(
+          onRateChanged: s.store.setSpeed,
           story: widget.story,
           progress: _progress,
           voice: voice,
@@ -54,10 +55,12 @@ class _DriveScreenState extends State<DriveScreen> {
           onFinished: _finished,
         );
       });
+      _engine!.setRate(s.store.speed);
     });
   }
 
   void _finished(bool completed) {
+    BackgroundSession.stop();
     if (!mounted) return;
     Navigator.of(context).pushReplacement(MaterialPageRoute<void>(
       builder: (_) => JournalScreen(
@@ -73,7 +76,7 @@ class _DriveScreenState extends State<DriveScreen> {
   @override
   void dispose() {
     _engine?.pause();
-    WakelockPlus.disable();
+    BackgroundSession.stop();
     _typed.dispose();
     super.dispose();
   }
@@ -84,6 +87,8 @@ class _DriveScreenState extends State<DriveScreen> {
     HapticFeedback.lightImpact();
     if (!_started) {
       _started = true;
+      // Lets the story continue with the screen off or under navigation.
+      BackgroundSession.start(title: widget.story.title, text: t['backgroundNote']);
       e.start();
       return;
     }
@@ -116,6 +121,12 @@ class _DriveScreenState extends State<DriveScreen> {
       appBar: AppBar(
         title: Text(widget.story.title, style: const TextStyle(fontSize: 16, color: Noir.dim)),
         actions: [
+          if (e != null)
+            TextButton(
+              key: const Key('speed'),
+              onPressed: () => _cycleSpeed(e),
+              child: Text('${_speedLabel(e.rate)}×', style: const TextStyle(color: Noir.amber, fontSize: 16)),
+            ),
           IconButton(
             tooltip: t['captions'],
             icon: Icon(_captions ? Icons.closed_caption : Icons.closed_caption_off_outlined),
@@ -133,7 +144,12 @@ class _DriveScreenState extends State<DriveScreen> {
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: _tap,
-          child: Column(children: [
+          child: Stack(children: [
+            // The story's scene glows faintly behind the controls.
+            const Positioned.fill(
+              child: Opacity(opacity: .32, child: FittedBox(fit: BoxFit.cover, child: SizedBox(width: 160, height: 224, child: PixelSceneView()))),
+            ),
+            Column(children: [
             Expanded(
               child: Center(
                 child: Semantics(
@@ -177,6 +193,7 @@ class _DriveScreenState extends State<DriveScreen> {
             ),
             if (_captions && e != null) _captionBox(e),
             if (_started && e != null) _typePanel(e),
+            ]),
           ]),
         ),
       ),
@@ -229,6 +246,16 @@ class _DriveScreenState extends State<DriveScreen> {
           ],
         ),
       );
+
+  String _speedLabel(double r) => r == r.roundToDouble() ? r.toStringAsFixed(1) : r.toString();
+
+  void _cycleSpeed(GameEngine e) {
+    const speeds = GameEngine.speeds;
+    final i = speeds.indexWhere((v) => v >= e.rate - 0.001);
+    final next = speeds[(i + 1) % speeds.length];
+    e.setRate(next);
+    widget.services.store.setSpeed(next);
+  }
 
   void _send(GameEngine e) {
     final v = _typed.text.trim();

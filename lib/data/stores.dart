@@ -44,6 +44,9 @@ class ProgressStore {
 
   Future<void> reset(Story s) => _prefs.remove(_key(s));
 
+  double get speed => _prefs.getDouble('speed') ?? 1.0;
+  Future<void> setSpeed(double v) => _prefs.setDouble('speed', v);
+
   String? get language => _prefs.getString('language');
   Future<void> setLanguage(String lang) => _prefs.setString('language', lang);
 }

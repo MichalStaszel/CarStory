@@ -2,7 +2,8 @@ import 'package:material_ui/material_ui.dart';
 
 import '../app_services.dart';
 import '../models/story.dart';
-import 'portrait_painter.dart';
+import 'evidence.dart';
+import 'pixel/pixel_scene_view.dart';
 import 'strings.dart';
 import 'theme.dart';
 
@@ -24,16 +25,30 @@ class JournalScreen extends StatelessWidget {
     const label = TextStyle(color: Noir.dim, fontSize: 11, letterSpacing: .8, fontFamily: 'sans-serif');
     const h2 = TextStyle(color: Noir.paper, fontSize: 19, fontWeight: FontWeight.w600);
 
-    final portrait = AspectRatio(
-      aspectRatio: 3 / 4,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xFF5A3C22), width: 6),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: CustomPaint(painter: PortraitPainter(p, stamp: t['caseClosed'])),
+    final portrait = Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xFF1B2638), width: 2),
+        borderRadius: BorderRadius.circular(4),
       ),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(children: [
+        PixelSceneView(dawn: p.done),
+        if (p.done)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 18,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(border: Border.all(color: const Color(0xFFEE3B3B), width: 2)),
+                child: Text(t['caseClosed'],
+                    style: const TextStyle(
+                        color: Color(0xFFEE3B3B), fontSize: 14, fontWeight: FontWeight.w800, letterSpacing: 3, fontFamily: 'monospace')),
+              ),
+            ),
+          ),
+      ]),
     );
 
     final progressCard = Card(
@@ -111,17 +126,8 @@ class JournalScreen extends StatelessWidget {
           Text(t['items'], style: h2),
           const SizedBox(height: 10),
           if (p.items.isEmpty) Text(t['emptyPockets'], style: const TextStyle(color: Noir.dim, fontStyle: FontStyle.italic)),
-          Wrap(spacing: 8, runSpacing: 8, children: [
-            for (final i in p.items.values)
-              Container(
-                width: 160,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(border: Border.all(color: Noir.line), borderRadius: BorderRadius.circular(10)),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(i.name, style: const TextStyle(color: Noir.paper, fontWeight: FontWeight.w600)),
-                  Text(i.desc, style: const TextStyle(color: Noir.dim, fontSize: 13)),
-                ]),
-              ),
+          Wrap(spacing: 12, runSpacing: 12, children: [
+            for (final i in p.items.values) EvidenceTile(item: i),
           ]),
         ]),
       ),
