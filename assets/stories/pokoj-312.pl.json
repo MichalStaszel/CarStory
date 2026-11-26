@@ -1,0 +1,693 @@
+{
+ "id": "pokoj-312",
+ "title": "Pokój 312",
+ "genre": "Kryminał noir",
+ "blurb": "Warszawa, listopad 1938. Budzisz się w zakrwawionym łóżku hotelowym obok nieprzytomnego mężczyzny.",
+ "minutes": 20,
+ "start": "intro",
+ "ending": "Lena Orska i Feliks Wróbel w kajdankach, plany portu w Gdyni odzyskane, twoje nazwisko czyste.",
+ "nodes": {
+  "intro": {
+   "checkpoint": "Przebudzenie",
+   "text": "Warszawa, listopad tysiąc dziewięćset trzydziestego ósmego. Deszcz bębni o parapet. Budzisz się w obcym pokoju hotelowym. Głowa pęka, w ustach gorzki smak migdałów i taniego koniaku. Prześcieradło jest lepkie. Od krwi. Obok łóżka, na dywanie, leży nieprzytomny mężczyzna w rozpiętej marynarce. Na drzwiach mosiężny numer: trzysta dwanaście.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Sprawdzasz mężczyznę",
+     "kw": [
+      "sprawdz",
+      "mezczyzn",
+      "facet",
+      "gosc",
+      "puls",
+      "zyje",
+      "podchodz",
+      "obejrz",
+      "ogladam",
+      "tego pana"
+     ],
+     "next": "check_man"
+    },
+    {
+     "key": "B",
+     "label": "Dzwonisz na policję",
+     "kw": [
+      "policj",
+      "dzwoni",
+      "telefon",
+      "zadzwon",
+      "glin",
+      "milicj"
+     ],
+     "next": "call_police"
+    },
+    {
+     "key": "C",
+     "label": "Szybko się ubierasz i wychodzisz z pokoju",
+     "kw": [
+      "ubier",
+      "wychodz",
+      "wyjdz",
+      "uciek",
+      "spadam",
+      "zwiew",
+      "wynos",
+      "drzwi"
+     ],
+     "next": "dress"
+    }
+   ]
+  },
+  "check_man": {
+   "text": "Klękasz przy nim. Oddycha – płytko, ale oddycha. Na skroni ma rozcięcie, krew zdążyła zakrzepnąć. To jego krew na pościeli, nie twoja. W wewnętrznej kieszeni marynarki wyczuwasz coś twardego. Odznaka Policji Państwowej. Przodownik Edward Kalina. Policjant. Przy twoim łóżku. Nagle z korytarza dochodzą kroki.",
+   "effects": {
+    "clue": {
+     "id": "badge",
+     "title": "Odznaka przodownika Kaliny",
+     "text": "Nieprzytomny mężczyzna to policjant, przodownik Edward Kalina. Żyje, ma ranę na skroni."
+    },
+    "flag": "checkedMan"
+   },
+   "choices": [
+    {
+     "key": "A",
+     "label": "Przeszukujesz resztę jego kieszeni",
+     "kw": [
+      "przeszuk",
+      "kiesze",
+      "szukam",
+      "portfel",
+      "grzeb"
+     ],
+     "next": "pockets"
+    },
+    {
+     "key": "B",
+     "label": "Próbujesz go ocucić",
+     "kw": [
+      "ocuc",
+      "obudz",
+      "budz",
+      "wod",
+      "potrzas",
+      "policzk",
+      "ratuj"
+     ],
+     "next": "wake_kalina"
+    },
+    {
+     "key": "C",
+     "label": "Zamierasz i nasłuchujesz kroków",
+     "kw": [
+      "nasluch",
+      "slucham",
+      "kroki",
+      "zamier",
+      "czekam",
+      "cicho",
+      "ukryw",
+      "chowam"
+     ],
+     "next": "steps"
+    }
+   ]
+  },
+  "pockets": {
+   "text": "Pudełko zapałek z napisem „Klub Adria”. Na odwrocie ktoś zapisał szminką: „Lena, dwudziesta trzecia”. Pod podszewką mały mosiężny kluczyk z numerem siedem i wybitym napisem: Dworzec Główny, przechowalnia. Chowasz wszystko. Kroki na korytarzu są coraz bliżej.",
+   "effects": {
+    "clue": {
+     "id": "matches",
+     "title": "Zapałki z Klubu Adria",
+     "text": "„Lena, 23:00” – zapisane szminką. Kalina miał się z kimś spotkać."
+    },
+    "item": {
+     "id": "key7",
+     "name": "Kluczyk do skrytki nr 7",
+     "desc": "Dworzec Główny, przechowalnia bagażu."
+    }
+   },
+   "next": "steps"
+  },
+  "wake_kalina": {
+   "text": "Klepiesz go po policzku. Powieki drgają. Kalina łapie cię za nadgarstek zaskakująco mocno i szepcze: „To nie ty... Lena... skrytka siedem... pociąg o świcie...”. Po czym znów odpływa. Kroki na korytarzu są coraz bliżej.",
+   "effects": {
+    "clue": {
+     "id": "whisper",
+     "title": "Szept Kaliny",
+     "text": "„To nie ty… Lena… skrytka siedem… pociąg o świcie.” Kalina wie, że jesteś niewinny."
+    },
+    "flag": "kalinaTrusts"
+   },
+   "next": "steps"
+  },
+  "steps": {
+   "checkpoint": "Kroki na korytarzu",
+   "text": "Kroki zatrzymują się pod drzwiami. Ktoś naciska klamkę, ale zasuwa trzyma. Słyszysz kobiecy szept: „Zostaw. Glina i tak się nie obudzi przed świtem. A to drugie zgarnie policja”. Męski głos chrząka. Kroki oddalają się, brzęczy dzwonek windy. To drugie. Chodzi o ciebie.",
+   "effects": {
+    "clue": {
+     "id": "frame",
+     "title": "Ktoś cię wrabia",
+     "text": "Kobieta i mężczyzna za drzwiami chcą, żeby policja znalazła cię przy rannym policjancie."
+    }
+   },
+   "choices": [
+    {
+     "key": "A",
+     "label": "Wychodzisz za nimi na korytarz",
+     "kw": [
+      "za nimi",
+      "korytarz",
+      "wychodz",
+      "gonie",
+      "sledz",
+      "idz"
+     ],
+     "next": "hallway"
+    },
+    {
+     "key": "B",
+     "label": "Przeszukujesz pokój",
+     "kw": [
+      "przeszuk",
+      "pokoj",
+      "szukam",
+      "rozgladam",
+      "szafk",
+      "lozk"
+     ],
+     "next": "search_room"
+    },
+    {
+     "key": "C",
+     "label": "Dzwonisz do recepcji",
+     "kw": [
+      "recepcj",
+      "dzwoni",
+      "telefon",
+      "portier"
+     ],
+     "next": "reception_call"
+    }
+   ]
+  },
+  "call_police": {
+   "text": "Podnosisz słuchawkę czarnego aparatu na stoliku. Cisza. Szarpiesz kabel – jest gładko przecięty nożem. Ktoś bardzo nie chciał, żebyś stąd dzwonił. Mężczyzna na podłodze cicho jęczy.",
+   "effects": {
+    "clue": {
+     "id": "cable",
+     "title": "Przecięty kabel telefonu",
+     "text": "Ktoś zaplanował, żebyś nie mógł nikogo wezwać z pokoju 312."
+    }
+   },
+   "choices": [
+    {
+     "key": "A",
+     "label": "Sprawdzasz mężczyznę",
+     "kw": [
+      "sprawdz",
+      "mezczyzn",
+      "facet",
+      "puls",
+      "jeczy",
+      "pomoc"
+     ],
+     "next": "check_man"
+    },
+    {
+     "key": "B",
+     "label": "Przeszukujesz pokój",
+     "kw": [
+      "przeszuk",
+      "pokoj",
+      "szukam",
+      "rozgladam"
+     ],
+     "next": "search_room"
+    },
+    {
+     "key": "C",
+     "label": "Wychodzisz na korytarz",
+     "kw": [
+      "wychodz",
+      "korytarz",
+      "wyjdz",
+      "drzwi",
+      "uciek"
+     ],
+     "next": "hallway"
+    }
+   ]
+  },
+  "dress": {
+   "text": "Wciągasz spodnie i koszulę, sięgasz po płaszcz z oparcia krzesła. Jest dziwnie ciężki. W prawej kieszeni rewolwer. Mały, niklowany, jeszcze pachnie prochem. Otwierasz bębenek. Brakuje jednej kuli. To nie jest twoja broń. Albo nie pamiętasz, żeby była.",
+   "effects": {
+    "clue": {
+     "id": "revolver",
+     "title": "Podrzucony rewolwer",
+     "text": "W twoim płaszczu ktoś zostawił rewolwer, z którego niedawno strzelano. Brakuje jednej kuli."
+    },
+    "item": {
+     "id": "revolver",
+     "name": "Niklowany rewolwer",
+     "desc": "Pięć naboi w bębenku. Szósty ktoś już wystrzelił."
+    }
+   },
+   "choices": [
+    {
+     "key": "A",
+     "label": "Wracasz sprawdzić mężczyznę",
+     "kw": [
+      "sprawdz",
+      "mezczyzn",
+      "facet",
+      "wracam",
+      "puls"
+     ],
+     "next": "check_man"
+    },
+    {
+     "key": "B",
+     "label": "Schodzisz schodami służbowymi",
+     "kw": [
+      "schod",
+      "sluzbow",
+      "tyl",
+      "kuchni",
+      "zaplecz"
+     ],
+     "next": "service_stairs"
+    },
+    {
+     "key": "C",
+     "label": "Przeszukujesz pokój",
+     "kw": [
+      "przeszuk",
+      "pokoj",
+      "szukam",
+      "rozgladam"
+     ],
+     "next": "search_room"
+    }
+   ]
+  },
+  "search_room": {
+   "text": "Pod łóżkiem znajdujesz damską rękawiczkę z czerwonej skóry, pachnącą fiołkami. Na stoliku nocnym leży hotelowa kartka z pośpiesznym pismem: „Gdynia. Szósta czterdzieści. Peron drugi”. A w koszu na śmieci program z Klubu Adria: „Dziś śpiewa Lena Orska”.",
+   "effects": {
+    "clue": {
+     "id": "glove",
+     "title": "Czerwona rękawiczka i kartka",
+     "text": "Rękawiczka pachnąca fiołkami. Kartka: „Gdynia, 6:40, peron 2”. Program: „Dziś śpiewa Lena Orska”."
+    },
+    "flag": "searchedRoom"
+   },
+   "choices": [
+    {
+     "key": "A",
+     "label": "Wychodzisz na korytarz",
+     "kw": [
+      "korytarz",
+      "wychodz",
+      "wyjdz",
+      "drzwi"
+     ],
+     "next": "hallway"
+    },
+    {
+     "key": "B",
+     "label": "Schodzisz schodami służbowymi",
+     "kw": [
+      "schod",
+      "sluzbow",
+      "tyl",
+      "zaplecz"
+     ],
+     "next": "service_stairs"
+    },
+    {
+     "key": "C",
+     "label": "Sprawdzasz mężczyznę na podłodze",
+     "kw": [
+      "sprawdz",
+      "mezczyzn",
+      "facet",
+      "puls"
+     ],
+     "next": "check_man"
+    }
+   ]
+  },
+  "reception_call": {
+   "text": "Telefon działa. Zaspany głos recepcjonisty: „Recepcja Hotelu Wiktoria, słucham?”. Pytasz, na kogo wynajęty jest pokój trzysta dwanaście. Pauza. „Na pana przodownika Kalinę. A druga osoba wpisała się jako... pana albo pani nazwisko. Kierownik Wróbel osobiście przyjmował meldunek”. Odkładasz słuchawkę.",
+   "effects": {
+    "clue": {
+     "id": "register",
+     "title": "Księga meldunkowa",
+     "text": "Pokój 312 wynajął Kalina. Twoje nazwisko wpisano obok. Meldunek przyjmował kierownik hotelu, Feliks Wróbel."
+    }
+   },
+   "next": "hallway"
+  },
+  "hallway": {
+   "checkpoint": "Hotel Wiktoria",
+   "text": "Korytarz pachnie pastą do podłóg i papierosami. Strzałka nad windą powoli opada na parter. Przy schodach stoi windziarz w czerwonej liberii, chłopak najwyżej szesnastoletni, i nerwowo obraca czapkę w dłoniach. Z dołu dochodzi syrena. Policja jest już w drodze.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Zjeżdżasz windą do holu",
+     "kw": [
+      "wind",
+      "hol",
+      "zjezdz",
+      "na dol",
+      "parter"
+     ],
+     "next": "lobby"
+    },
+    {
+     "key": "B",
+     "label": "Schodzisz schodami służbowymi",
+     "kw": [
+      "schod",
+      "sluzbow",
+      "tyl",
+      "kuchni",
+      "zaplecz"
+     ],
+     "next": "service_stairs"
+    },
+    {
+     "key": "C",
+     "label": "Wypytujesz windziarza",
+     "kw": [
+      "windziarz",
+      "chlopak",
+      "pytam",
+      "wypyt",
+      "rozmaw",
+      "boy"
+     ],
+     "next": "liftboy"
+    }
+   ]
+  },
+  "liftboy": {
+   "text": "Chłopak przełyka ślinę. „Wysoka pani w czerwonych rękawiczkach. Pani Orska, ta śpiewaczka z Adrii. Zjechała z panem kierownikiem Wróblem. Pan kierownik niósł skórzaną teczkę i kazał mi zapomnieć, że ich widziałem”. Wciskasz mu do ręki monetę. Pokazuje ci drzwi na schody służbowe.",
+   "effects": {
+    "clue": {
+     "id": "liftboy",
+     "title": "Zeznanie windziarza",
+     "text": "Lena Orska i kierownik Wróbel wyszli razem. Wróbel niósł skórzaną teczkę."
+    }
+   },
+   "next": "service_stairs"
+  },
+  "lobby": {
+   "text": "Drzwi windy rozsuwają się. W holu trzech mundurowych i komisarz w mokrym kapeluszu. „Pokój trzysta dwanaście, na górę, migiem!” – rzuca. Recepcjonista patrzy prosto na ciebie i otwiera usta.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Podchodzisz i mówisz policji prawdę",
+     "kw": [
+      "prawd",
+      "policj",
+      "komisarz",
+      "mowie",
+      "tlumacz",
+      "podchodz",
+      "przyznaj"
+     ],
+     "next": "police_truth"
+    },
+    {
+     "key": "B",
+     "label": "Wymykasz się przez drzwi obrotowe",
+     "kw": [
+      "wymyk",
+      "drzwi",
+      "obrotow",
+      "uciek",
+      "wychodz",
+      "na ulic"
+     ],
+     "next": "street"
+    },
+    {
+     "key": "C",
+     "label": "Wracasz windą i idziesz schodami służbowymi",
+     "kw": [
+      "wracam",
+      "wind",
+      "schod",
+      "sluzbow",
+      "tyl"
+     ],
+     "next": "service_stairs"
+    }
+   ]
+  },
+  "police_truth": {
+   "fail": true,
+   "text": "Komisarz słucha dwie minuty, potem zakłada ci kajdanki. „Opowie pan albo pani to sędziemu”. Nad ranem pociąg do Gdyni odjeżdża punktualnie, a razem z nim ktoś, kto naprawdę stoi za tą nocą. To nie jest koniec, który pisał dla ciebie los. Cofamy się do ostatniego punktu.",
+   "next": "@checkpoint"
+  },
+  "service_stairs": {
+   "checkpoint": "Zaplecze",
+   "text": "Schody służbowe prowadzą przez hotelową kuchnię na podwórze. W blaszanym koszu przy śmietnikach dopala się ogień. Nad nim stoi kierownik hotelu, Feliks Wróbel, i wrzuca w płomienie kartki. Na twój widok blednie.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Konfrontujesz Wróbla",
+     "kw": [
+      "konfront",
+      "wrobl",
+      "kierownik",
+      "lapie",
+      "pytam",
+      "zatrzym",
+      "atak",
+      "rozmaw"
+     ],
+     "next": "confront_wrobel"
+    },
+    {
+     "key": "B",
+     "label": "Wyrywasz z ognia niedopalone kartki",
+     "kw": [
+      "kartk",
+      "ogien",
+      "ognia",
+      "wyrywam",
+      "papier",
+      "kosz",
+      "ratuj"
+     ],
+     "next": "burned_papers"
+    },
+    {
+     "key": "C",
+     "label": "Wymykasz się bramą na ulicę",
+     "kw": [
+      "brama",
+      "ulic",
+      "wymyk",
+      "uciek",
+      "wychodz"
+     ],
+     "next": "street"
+    }
+   ]
+  },
+  "confront_wrobel": {
+   "text": "Chwytasz go za klapy. Wróbel, cały w potach, mamrocze: „Ja tylko wynająłem pokój! To ona, Lena. Dosypała panu, pani, coś do koniaku w Adrii. Kalina deptał jej po piętach. A plany... plany portu jadą o świcie do Gdyni”. Wyrywa się i ucieka w deszcz.",
+   "effects": {
+    "clue": {
+     "id": "confession",
+     "title": "Wyznanie Wróbla",
+     "text": "Lena Orska odurzyła cię w Klubie Adria. Kalina ją śledził. O świcie do Gdyni jadą skradzione plany portu."
+    }
+   },
+   "next": "street"
+  },
+  "burned_papers": {
+   "text": "Parzysz palce, ale wyciągasz z ognia pół strony. Maszynopis, nagłówek urzędowy: „Port Gdynia. Rozmieszczenie baterii nabrzeżnych. Ściśle tajne”. W tym czasie Wróbel znika w bramie.",
+   "effects": {
+    "clue": {
+     "id": "plans",
+     "title": "Spalony dokument",
+     "text": "Fragment ściśle tajnych planów portu w Gdyni. To nie zwykłe morderstwo – to szpiegostwo."
+    },
+    "item": {
+     "id": "page",
+     "name": "Nadpalona strona planów",
+     "desc": "Port Gdynia, ściśle tajne."
+    }
+   },
+   "next": "street"
+  },
+  "street": {
+   "checkpoint": "Deszczowa ulica",
+   "text": "Marszałkowska tonie w deszczu. Latarnie mrugają. Pod hotelem czeka dorożka samochodowa, szofer pali papierosa. „Dokąd?” – pyta, nie odwracając głowy. Zegar na rogu pokazuje piątą dwadzieścia.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Do Klubu Adria",
+     "kw": [
+      "adri",
+      "klub"
+     ],
+     "next": "club"
+    },
+    {
+     "key": "B",
+     "label": "Na Dworzec Główny",
+     "kw": [
+      "dworzec",
+      "dworc",
+      "pociag",
+      "stacj",
+      "kolej"
+     ],
+     "next": "station"
+    },
+    {
+     "key": "C",
+     "label": "Na komisariat",
+     "kw": [
+      "komisariat",
+      "policj",
+      "posterun"
+     ],
+     "next": "precinct"
+    }
+   ]
+  },
+  "precinct": {
+   "text": "Na komisariacie dyżurny ziewa i każe czekać. Na ścianie wisi list gończy. Z twoim rysopisem, jeszcze mokrym od kleju. Wycofujesz się, zanim ktokolwiek podniesie wzrok. Szofer ciągle czeka. „To może jednak dworzec?”.",
+   "next": "station"
+  },
+  "club": {
+   "text": "Klub Adria o tej porze to sala pełna odwróconych krzeseł. Garderoba Leny jest otwarta. Na toaletce puste opakowanie po proszkach nasennych i zdjęcie: Lena w ramionach mężczyzny w obcym mundurze. Na odwrocie: „Gdynia, po odbiorze”. Wszystko jasne. Jedziesz na dworzec.",
+   "effects": {
+    "clue": {
+     "id": "photo",
+     "title": "Zdjęcie z garderoby",
+     "text": "Lena z oficerem obcego wywiadu. „Gdynia, po odbiorze”. Proszki nasenne – tym cię uśpiła."
+    }
+   },
+   "next": "station"
+  },
+  "station": {
+   "checkpoint": "Dworzec Główny, świt",
+   "text": "Dworzec Główny. Szósta trzydzieści. Para z lokomotyw miesza się z mgłą. Pod zegarem dostrzegasz czerwone rękawiczki. Lena Orska, a obok niej Wróbel z teczką. Kierują się na peron drugi. Do odjazdu dziesięć minut.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Najpierw otwierasz skrytkę numer siedem",
+     "kw": [
+      "skrytk",
+      "siedem",
+      "przechowal",
+      "klucz",
+      "siodem"
+     ],
+     "next": "locker"
+    },
+    {
+     "key": "B",
+     "label": "Idziesz prosto na peron drugi",
+     "kw": [
+      "peron",
+      "prosto",
+      "za nimi",
+      "pociag",
+      "gonie"
+     ],
+     "next": "platform"
+    },
+    {
+     "key": "C",
+     "label": "Wzywasz policję z budki telefonicznej",
+     "kw": [
+      "budk",
+      "policj",
+      "dzwoni",
+      "telefon"
+     ],
+     "next": "phone_booth"
+    }
+   ]
+  },
+  "locker": {
+   "text": "{key7?Kluczyk Kaliny pasuje idealnie.:Nie masz klucza, ale stary zamek ustępuje po trzecim mocnym szarpnięciu.} W skrytce notes przodownika Kaliny. Daty, godziny, nazwiska. Lena Orska, Feliks Wróbel, przekazanie planów portu w Gdyni. I jedno zdanie podkreślone dwa razy: „Planują wrobić przypadkowego gościa”. Masz dowód swojej niewinności.",
+   "effects": {
+    "clue": {
+     "id": "notebook",
+     "title": "Notes Kaliny",
+     "text": "Pełne śledztwo Kaliny. „Planują wrobić przypadkowego gościa” – dowód twojej niewinności."
+    },
+    "item": {
+     "id": "notebook",
+     "name": "Notes przodownika Kaliny",
+     "desc": "Dowód twojej niewinności."
+    },
+    "flag": "hasProof"
+   },
+   "next": "platform"
+  },
+  "phone_booth": {
+   "text": "Wrzucasz monetę i prosisz o połączenie z komisariatem. „Mówi świadek. Pociąg do Gdyni, szósta czterdzieści, peron drugi. Szpiedzy z planami portu. Przodownik Kalina leży ranny w Hotelu Wiktoria, pokój trzysta dwanaście”. Odkładasz słuchawkę. Teraz liczy się każda minuta.",
+   "effects": {
+    "flag": "calledBackup"
+   },
+   "next": "platform"
+  },
+  "platform": {
+   "checkpoint": "Peron drugi",
+   "text": "Peron drugi. Konduktor unosi chorągiewkę. Lena stawia stopę na stopniu wagonu, Wróbel podaje jej teczkę. Odwraca się i patrzy wprost na ciebie. Uśmiecha się, jakby wiedziała, że nie zdążysz.",
+   "choices": [
+    {
+     "key": "A",
+     "label": "Krzyczysz „Policja!” i blokujesz drzwi wagonu",
+     "kw": [
+      "krzycz",
+      "policj",
+      "blokuj",
+      "drzwi",
+      "wolam"
+     ],
+     "next": "finale"
+    },
+    {
+     "key": "B",
+     "label": "Wskakujesz do pociągu za nimi",
+     "kw": [
+      "wskakuj",
+      "pociag",
+      "wsiadam",
+      "za nimi",
+      "skacz"
+     ],
+     "next": "finale"
+    },
+    {
+     "key": "C",
+     "label": "Wyrywasz Wróblowi teczkę",
+     "kw": [
+      "teczk",
+      "wyrywam",
+      "wrobl",
+      "lapie",
+      "zabieram"
+     ],
+     "next": "finale"
+    }
+   ]
+  },
+  "finale": {
+   "end": true,
+   "checkpoint": "Finał",
+   "text": "{revolver?Wyciągasz niklowany rewolwer. Wróbel rzuca teczkę na peron i podnosi ręce.:Rzucasz się do przodu. Teczka ląduje na mokrym peronie.} Lena próbuje wskoczyć do wagonu, ale {calledBackup?z obu stron peronu biegną już mundurowi, wezwani przez ciebie z budki.:z tłumu wyłania się komisarz z hotelu z dwoma mundurowymi.} Za nimi, blady, z bandażem na skroni, idzie przodownik Kalina. {hasProof?Podajesz mu jego notes. Kiwa głową.:Kalina spogląda na ciebie i mówi tylko: „Puśćcie. To nie ten”.} Kajdanki zatrzaskują się na nadgarstkach Leny Orskiej. Pociąg do Gdyni odjeżdża bez niej. Deszcz w końcu przestaje padać. Koniec historii „Pokój trzysta dwanaście”."
+  }
+ },
+ "lang": "pl"
+}
