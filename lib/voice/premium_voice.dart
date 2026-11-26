@@ -19,6 +19,7 @@ class PremiumVoice implements VoiceIO {
   final AudioPlayer _player = AudioPlayer();
   Set<String> _clips = const {};
   bool _stopped = false;
+  double _rate = 1.0;
 
   /// How many bundled clips exist for this language (0 = device voice only).
   int get clipCount => _clips.length;
@@ -42,10 +43,18 @@ class PremiumVoice implements VoiceIO {
     try {
       await _player.setAsset(asset);
       if (_stopped) return;
+      if (_player.speed != _rate) await _player.setSpeed(_rate);
       await _player.play(); // completes when the clip ends or is stopped
     } catch (_) {
       if (!_stopped) await device.speak(text);
     }
+  }
+
+  @override
+  Future<void> setRate(double rate) async {
+    _rate = rate;
+    await _player.setSpeed(rate); // time-stretched, pitch stays natural
+    await device.setRate(rate);
   }
 
   @override
@@ -56,7 +65,12 @@ class PremiumVoice implements VoiceIO {
   }
 
   @override
-  Future<List<String>?> listen({Duration timeout = const Duration(seconds: 9)}) => device.listen(timeout: timeout);
+  Future<List<String>?> listen({
+    Duration timeout = const Duration(seconds: 9),
+    bool Function(List<String>)? acceptEarly,
+    List<String> hints = const [],
+  }) =>
+      device.listen(timeout: timeout, acceptEarly: acceptEarly, hints: hints);
 
   @override
   Future<void> cancelListening() => device.cancelListening();

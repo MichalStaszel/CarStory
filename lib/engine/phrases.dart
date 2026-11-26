@@ -24,6 +24,8 @@ class Phrases {
     required this.resumeIntro,
     required this.endOutro,
     required this.quitOutro,
+    required this.fasterAck,
+    required this.slowerAck,
   });
 
   final String lang;
@@ -55,6 +57,8 @@ class Phrases {
   final String resumeIntro;
   final String endOutro;
   final String quitOutro;
+  final String fasterAck;
+  final String slowerAck;
 
   static Phrases forLang(String lang) => lang == 'pl' ? polish : english;
 
@@ -77,6 +81,8 @@ class Phrases {
       VoiceCommand.items: RegExp(r'\b(items?|inventory|what do i have|my stuff)\b'),
       VoiceCommand.pause: RegExp(r'^(pause|stop|hold on|wait a (minute|second))\b'),
       VoiceCommand.quit: RegExp(r'\b(quit|end (the )?(game|story|session)|exit)\b'),
+      VoiceCommand.faster: RegExp(r'\b(faster|speed up|talk faster|read faster)\b'),
+      VoiceCommand.slower: RegExp(r'\b(slower|slow down|talk slower|read slower)\b'),
     },
     choicePattern: RegExp(r'\b(?:option|choice|letter|answer|choose|pick|go with)\s+(a|b|c|be|bee|see|sea|cee)\b'),
     whatDoYouDo: 'What do you do?',
@@ -95,6 +101,8 @@ class Phrases {
     resumeIntro: 'Back to {title}. Last time:',
     endOutro: 'Case closed. When you stop, open the case file in the app to see your clues, items, and your character.',
     quitOutro: 'Progress saved. See you on the road.',
+    fasterAck: 'Faster.',
+    slowerAck: 'Slower.',
   );
 
   static final polish = Phrases(
@@ -116,6 +124,8 @@ class Phrases {
       VoiceCommand.items: RegExp(r'(przedmiot|ekwipunek|co mam przy sobie|inwentarz)'),
       VoiceCommand.pause: RegExp(r'^(pauza|stop|zatrzymaj|wstrzymaj|przerwa)'),
       VoiceCommand.quit: RegExp(r'(zakoncz|koniec gry|wyjdz z gry|konczymy)'),
+      VoiceCommand.faster: RegExp(r'(szybciej|przyspiesz)'),
+      VoiceCommand.slower: RegExp(r'(wolniej|zwolnij)'),
     },
     choicePattern: RegExp(r'\b(?:opcj\w*|wybieram|odpowiedz|litera|wariant)\s+(a|b|c|be|ce|cee|tse)\b'),
     whatDoYouDo: 'Co robisz?',
@@ -134,7 +144,9 @@ class Phrases {
     resumeIntro: 'Wracamy do opowieści {title}. Ostatnio:',
     endOutro: 'Sprawa zamknięta. Kiedy się zatrzymasz, zajrzyj do teczki śledztwa w aplikacji.',
     quitOutro: 'Zapisuję postęp. Do usłyszenia w drodze.',
+    fasterAck: 'Szybciej.',
+    slowerAck: 'Wolniej.',
   );
 }
 
-enum VoiceCommand { repeat, clues, items, pause, quit }
+enum VoiceCommand { repeat, clues, items, pause, quit, faster, slower }

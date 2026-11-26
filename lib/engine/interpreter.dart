@@ -62,6 +62,25 @@ class Interpreter {
   final Phrases phrases;
   final FreeformResolver? freeform;
 
+  /// Instant match on a short answer: a letter ("bee", "option c") or an
+  /// ordinal ("second"). Used on partial speech results so the game reacts
+  /// as soon as the letter is heard. Returns the choice key or null.
+  String? quickChoice(List<String> alternatives, StoryNode node) {
+    final keys = node.choices.map((c) => c.key).toSet();
+    for (final v in alternatives.map(normalize)) {
+      if (v.isEmpty) continue;
+      final k = _letterOrOrdinal(v);
+      if (k != null && keys.contains(k)) return k;
+    }
+    return null;
+  }
+
+  /// Phrases to bias the recognizer toward for this scene.
+  List<String> hintsFor(StoryNode node) => [
+        for (final c in node.choices) ...[c.key, c.label],
+        for (final words in phrases.letters.values) ...words.take(2),
+      ];
+
   /// [alternatives] are the recognizer's transcriptions, best first.
   Future<Interpretation> interpret(List<String> alternatives, StoryNode node, {String sceneText = ''}) async {
     final variants = alternatives.map(normalize).where((v) => v.isNotEmpty).toList();

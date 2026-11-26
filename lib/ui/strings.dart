@@ -17,7 +17,7 @@ class UiStrings {
     'soon': 'Coming soon',
     'min': 'min',
     'solved': 'Solved',
-    'howTo': 'Say "A", "B", "C", or just what you do. Voice commands: "repeat", "clues", "items", "pause", "quit".',
+    'howTo': 'Say "A", "B", "C", or just what you do. Voice commands: "repeat", "clues", "items", "faster", "slower", "pause", "quit". Works with the screen off and next to your navigation app.',
     'tapToStart': 'Tap to start. After that, voice only.',
     'start': 'Start',
     'narrator': 'Narrator',
@@ -44,6 +44,7 @@ class UiStrings {
     'portraitNote': 'Your portrait changes with what you find.',
     'sessions': 'sessions',
     'caseClosed': 'CASE CLOSED',
+    'backgroundNote': 'Story in progress. Keeps playing with the screen off.',
   });
 
   static const pl = UiStrings._({
@@ -57,7 +58,7 @@ class UiStrings {
     'soon': 'Wkrótce',
     'min': 'min',
     'solved': 'Rozwiązana',
-    'howTo': 'Mów „A”, „B”, „C” albo po prostu, co robisz. Komendy: „powtórz”, „wskazówki”, „przedmioty”, „pauza”, „zakończ”.',
+    'howTo': 'Mów „A”, „B”, „C” albo po prostu, co robisz. Komendy: „powtórz”, „wskazówki”, „przedmioty”, „szybciej”, „wolniej”, „pauza”, „zakończ”. Działa przy zgaszonym ekranie i obok nawigacji.',
     'tapToStart': 'Dotknij, aby zacząć. Potem już tylko głos.',
     'start': 'Start',
     'narrator': 'Narrator',
@@ -84,6 +85,7 @@ class UiStrings {
     'portraitNote': 'Portret zmienia się z tym, co zdobędziesz.',
     'sessions': 'sesje',
     'caseClosed': 'SPRAWA ZAMKNIĘTA',
+    'backgroundNote': 'Opowieść trwa. Gra dalej przy zgaszonym ekranie.',
   });
 }
 

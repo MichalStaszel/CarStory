@@ -23,8 +23,21 @@ class ScriptedVoice implements VoiceIO {
   Future<void> speak(String text) async => spoken.add(text);
   @override
   Future<void> stopSpeaking() async {}
+  double rate = 1.0;
+  final hintsSeen = <List<String>>[];
+  bool Function(List<String>)? lastAcceptEarly;
+
   @override
-  Future<List<String>?> listen({Duration timeout = const Duration(seconds: 9)}) async {
+  Future<void> setRate(double r) async => rate = r;
+
+  @override
+  Future<List<String>?> listen({
+    Duration timeout = const Duration(seconds: 9),
+    bool Function(List<String>)? acceptEarly,
+    List<String> hints = const [],
+  }) async {
+    hintsSeen.add(hints);
+    lastAcceptEarly = acceptEarly;
     if (_answers.isEmpty) return Completer<List<String>?>().future; // wait forever
     final a = _answers.removeFirst();
     return a == null ? null : [a];
@@ -143,4 +156,30 @@ void main() {
       expect(missing, isEmpty);
     });
   }
+
+  test('listening hints the options and accepts a heard letter early', () async {
+    final s = Session(en, []);
+    await s.run();
+    expect(s.voice.hintsSeen.last, containsAll(['A', 'Check on the man', 'C']));
+    final early = s.voice.lastAcceptEarly!;
+    expect(early(['bee']), isTrue);
+    expect(early(['option c']), isTrue);
+    expect(early(['check']), isFalse, reason: 'own words wait for the final result');
+    expect(early(['call the police and']), isFalse);
+  });
+
+  test('narration speed is passed to the voice', () async {
+    final s = Session(en, []);
+    await s.engine.setRate(1.3);
+    expect(s.voice.rate, 1.3);
+    expect(s.engine.rate, 1.3);
+  });
+
+  test('"faster" and "slower" by voice step the speed and keep listening', () async {
+    final s = Session(en, ['faster', 'faster', 'slower']);
+    await s.run();
+    expect(s.engine.rate, 1.1);
+    expect(s.voice.spoken, containsAllInOrder(['Faster.', 'Faster.', 'Slower.']));
+    expect(s.engine.status, EngineStatus.listening);
+  });
 }

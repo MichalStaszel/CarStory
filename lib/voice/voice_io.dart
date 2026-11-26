@@ -10,9 +10,21 @@ abstract interface class VoiceIO {
   /// Stops narration early (the player tapped to answer).
   Future<void> stopSpeaking();
 
+  /// Narration speed, 1.0 = normal. Applies to clips and device voice.
+  Future<void> setRate(double rate);
+
   /// Listens for one answer. Returns the transcriptions, best first, or null
-  /// on silence.
-  Future<List<String>?> listen({Duration timeout});
+  /// when nothing was said before [timeout].
+  ///
+  /// [acceptEarly] is checked on every partial result; when it returns true
+  /// the answer is taken at once instead of waiting for the speaker to
+  /// finish, which makes "A", "B", "C" feel instant. [hints] are phrases the
+  /// recognizer should expect (letters and option labels).
+  Future<List<String>?> listen({
+    Duration timeout,
+    bool Function(List<String> alternatives)? acceptEarly,
+    List<String> hints,
+  });
 
   Future<void> cancelListening();
 }

@@ -20,7 +20,14 @@ class GameEngine {
     this.onSave,
     this.onFinished,
     this.chime,
+    this.onRateChanged,
   });
+
+  /// Narration speeds offered, like an audiobook player.
+  static const speeds = [1.0, 1.1, 1.2, 1.3, 1.5, 1.75, 2.0];
+
+  /// Called when the player changes speed by voice, to remember it.
+  final void Function(double rate)? onRateChanged;
 
   final Story story;
   final Progress progress;
@@ -85,6 +92,15 @@ class GameEngine {
     onFinished?.call(false);
   }
 
+  /// Narration speed (1.0 = normal), like an audiobook player.
+  double get rate => _rate;
+  double _rate = 1.0;
+  Future<void> setRate(double r) async {
+    _rate = r;
+    await voice.setRate(r);
+    onChanged?.call();
+  }
+
   /// The player tapped while the narrator talks: skip ahead to answering.
   Future<void> skipNarration() => voice.stopSpeaking();
 
@@ -144,7 +160,7 @@ class GameEngine {
   Future<void> _ask(StoryNode node, int run, String sceneText) async {
     _silentTurns = 0;
     while (run == _run) {
-      final alts = await _listen(run);
+      final alts = await _listen(run, node);
       if (run != _run) return;
       if (alts == null || alts.isEmpty) {
         _silentTurns++;
@@ -201,6 +217,14 @@ class GameEngine {
         await _say(phrases.paused, run);
         await pause();
         return false;
+      case VoiceCommand.faster || VoiceCommand.slower:
+        final i = speeds.indexWhere((v) => v >= _rate - 0.001);
+        final next = c == VoiceCommand.faster
+            ? speeds[(i + 1).clamp(0, speeds.length - 1)]
+            : speeds[(i - 1).clamp(0, speeds.length - 1)];
+        await setRate(next);
+        onRateChanged?.call(next);
+        return _say(c == VoiceCommand.faster ? phrases.fasterAck : phrases.slowerAck, run, keepCaption: true);
       case VoiceCommand.quit:
         await _say(phrases.quitOutro, run);
         await quit();
@@ -228,10 +252,14 @@ class GameEngine {
     return run == _run;
   }
 
-  Future<List<String>?> _listen(int run) async {
+  Future<List<String>?> _listen(int run, StoryNode node) async {
     _set(EngineStatus.listening);
     final manual = _manual = Completer<List<String>?>();
-    final heardByVoice = voice.listen(timeout: const Duration(seconds: 9));
+    final heardByVoice = voice.listen(
+      timeout: const Duration(seconds: 12),
+      acceptEarly: (alts) => interpreter.quickChoice(alts, node) != null,
+      hints: interpreter.hintsFor(node),
+    );
     final result = await Future.any([manual.future, heardByVoice]);
     if (manual.isCompleted) {
       await voice.cancelListening();
@@ -280,7 +308,7 @@ List<String> narrationSegments(Story story, Phrases p) {
   out.addAll([
     p.listeningNudge, p.repeatOptions, p.pausedForSilence, p.paused, p.notUnderstood, p.newClue, p.youGet,
     p.cluesIntro, p.noClues, p.itemsIntro, p.noItems, p.backToStory, p.endOutro, p.quitOutro,
-    p.resumeIntro.replaceAll('{title}', story.title),
+    p.resumeIntro.replaceAll('{title}', story.title), p.fasterAck, p.slowerAck,
   ]);
   return out.toList();
 }
