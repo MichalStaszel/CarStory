@@ -2,6 +2,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../app_services.dart';
 import '../models/story.dart';
+import 'evidence.dart';
 import 'portrait_painter.dart';
 import 'strings.dart';
 import 'theme.dart';
@@ -111,17 +112,8 @@ class JournalScreen extends StatelessWidget {
           Text(t['items'], style: h2),
           const SizedBox(height: 10),
           if (p.items.isEmpty) Text(t['emptyPockets'], style: const TextStyle(color: Noir.dim, fontStyle: FontStyle.italic)),
-          Wrap(spacing: 8, runSpacing: 8, children: [
-            for (final i in p.items.values)
-              Container(
-                width: 160,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(border: Border.all(color: Noir.line), borderRadius: BorderRadius.circular(10)),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(i.name, style: const TextStyle(color: Noir.paper, fontWeight: FontWeight.w600)),
-                  Text(i.desc, style: const TextStyle(color: Noir.dim, fontSize: 13)),
-                ]),
-              ),
+          Wrap(spacing: 12, runSpacing: 12, children: [
+            for (final i in p.items.values) EvidenceTile(item: i),
           ]),
         ]),
       ),
